@@ -43,7 +43,24 @@ La cartella AnsibleConf contiene il file Ansible per l'installazione e configura
 La configurazione prevede sia le sonde di defualt sulla stessa istanza (localhost) che l'aggiunta di un nuovo host (my-container-service-1) con una sonda sull'endpoint del container service (http_check). <br>
 Inoltre è stato configurato il redirect Apache dalla root del sito al path /nagios. Così da poter accedere direttamante dall'IP pubblico. <br>
   <img src="Img/Nagios.png" width="80%">
+```
+#Terraform commands
 
+terraform -v
+#terraform v1.2.5 on linux_amd64
+terraform init
+terraform validate
+terraform apply
+
+#Ansible commands
+
+#open inventory.ini and set ansible_host (public instance ip) and ansible_ssh_private_key_file (instance ssh key path)
+#open vars.yml and set HostName, HostAddress (container domain) and NagiosPassword
+
+ansible --version
+#ansible [core 2.15.1]
+ansible-playbook -i inventory.ini nagios_conf.yml
+```
 <h3> Test </h3>
 In Test ci sono dei banali unit test sugli endpoints dei servizi. Verifica solo se lo status di risposta è 200.
   <img src="Img/Service1.png" width="60%">
