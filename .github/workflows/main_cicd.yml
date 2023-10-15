@@ -41,10 +41,10 @@ jobs:
     - name: Delivery apigateway
       if: steps.changes.outputs.Apigateway == 'true'
       run: |
-       docker build . --file ..App/Apigateway/Dockerfile -t apigateway
+       docker build . --file ./App/Apigateway/Dockerfile -t apigateway
        docker run -d -p 5000:5000 --name apigateway apigateway
        sleep 10
-       test_apigateway=$(python ../Test/test_apigateway.py)
+       test_apigateway=$(python ./Test/test_apigateway.py)
        if [ "$test_apigateway" == "OK" ]; then
         aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label apigateway --image apigateway
        else
@@ -56,10 +56,10 @@ jobs:
       if: steps.changes.outputs.Service1 == 'true'
       run: |
        pwd
-       docker build . --file ../../App/Service1/Dockerfile -t service1
+       docker build . --file ./App/Service1/Dockerfile -t service1
        docker run -d -p 5001:5001 --name service1 service1
        sleep 10
-       test_service1=$(python ../../Test/test_service1.py)
+       test_service1=$(python ./Test/test_service1.py)
        echo $test_service1
        if [ "$test_service1" == "OK" ]; then
            aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label service1 --image service1
@@ -71,10 +71,10 @@ jobs:
     - name: Delivery service2
       if: steps.changes.outputs.Service2 == 'true'
       run: |
-       docker build . --file ../App/Service2/Dockerfile -t service2
+       docker build . --file ./App/Service2/Dockerfile -t service2
        docker run -d -p 5002:5002 --name service2 service2
        sleep 10
-       test_service2=$(python ../Test/test_service2.py)
+       test_service2=$(python ./Test/test_service2.py)
        if [ "$test_service2" == "OK" ]; then
            aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label service2 --image service2
        else
