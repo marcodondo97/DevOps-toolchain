@@ -41,6 +41,7 @@ jobs:
     - name: Delivery apigateway
       if: steps.changes.outputs.Apigateway == 'true'
       run: |
+       pwd
        docker build . --file ..App/Apigateway/Dockerfile -t apigateway
        docker run -d -p 5000:5000 --name apigateway apigateway
        sleep 10
