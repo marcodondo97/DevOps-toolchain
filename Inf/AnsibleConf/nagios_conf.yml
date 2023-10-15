@@ -94,7 +94,7 @@
 
     - name: Copy httpd.conf file to the server
       template:
-        src: Confs/httpd.conf.j2
+        src: Templates/httpd.conf.j2
         dest: /etc/httpd/conf/httpd.conf
 
     - name: Extract nagios plugins source
@@ -124,8 +124,8 @@
         state: directory
 
     - name: Copy myhost.cfg file to the server
-      copy:
-        src: Confs/myhost.cfg.j2
+      template:
+        src: Templates/myhost.cfg.j2
         dest: /usr/local/nagios/etc/servers/myhost.cfg
 
     - name: Change owner servers directory
