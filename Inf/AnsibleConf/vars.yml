@@ -1,0 +1,3 @@
+HostName: myhost
+HostAddress: mydomain.com
+NagiosPassword: mypassword

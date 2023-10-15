@@ -1,0 +1,157 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+    - vars.yml
+  tasks:
+
+    - name: Install httpd and php
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - httpd
+        - php
+      when: ansible_os_family == "RedHat"
+
+    - name: Install required packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - gcc
+        - glibc
+        - glibc-common
+        - gd
+        - gd-devel
+      when: ansible_os_family == "RedHat"
+
+    - name: Create nagios user
+      user:
+        name: nagios
+        state: present
+
+    - name: Create nagcmd group
+      group:
+        name: nagcmd
+        state: present
+
+    - name: Add nagios user to nagcmd group
+      user:
+        name: nagios
+        groups: nagcmd
+        append: yes
+
+    - name: Add apache user to nagcmd group
+      user:
+        name: apache
+        groups: nagcmd
+        append: yes
+
+    - name: Create downloads directory
+      file:
+        path: ~/downloads
+        state: directory
+
+    - name: Download nagios source
+      get_url:
+        url: http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
+        dest: ~/downloads/nagios-4.0.8.tar.gz
+
+    - name: Download nagios Plugins source
+      get_url:
+        url: http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
+        dest: ~/downloads/nagios-plugins-2.0.3.tar.gz
+
+    - name: Extract nagios source
+      unarchive:
+        src: ~/downloads/nagios-4.0.8.tar.gz
+        dest: ~/downloads/
+        remote_src: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Configure nagios
+      shell: |
+        cd ~/downloads/nagios-4.0.8
+        ./configure --with-command-group=nagcmd
+        make all
+      when: ansible_os_family == "RedHat"
+
+    - name: Install nagios
+      shell: |
+        cd ~/downloads/nagios-4.0.8
+        sudo make install
+        sudo make install-init
+        sudo make install-config
+        sudo make install-commandmode
+        sudo make install-webconf
+      when: ansible_os_family == "RedHat"
+
+    - name: Set nagios admin password
+      shell: |
+        echo {{ NagiosPassword }} | sudo htpasswd -i -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+      when: ansible_os_family == "RedHat"
+
+    - name: Copy httpd.conf file to the server
+      template:
+        src: Confs/httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+
+    - name: Extract nagios plugins source
+      unarchive:
+        src: ~/downloads/nagios-plugins-2.0.3.tar.gz
+        dest: ~/downloads/
+        remote_src: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Configure nagios plugins
+      shell: |
+        cd ~/downloads/nagios-plugins-2.0.3
+        ./configure --with-nagios-user=nagios --with-nagios-group=nagios
+        make
+        sudo make install
+      when: ansible_os_family == "RedHat"
+
+
+    - name: Add cfg_dir to nagios.cfg file
+      lineinfile:
+        path: /usr/local/nagios/etc/nagios.cfg
+        line: "cfg_dir=/usr/local/nagios/etc/servers"
+
+    - name: Create servers directory
+      file:
+        path: /usr/local/nagios/etc/servers
+        state: directory
+
+    - name: Copy myhost.cfg file to the server
+      copy:
+        src: Confs/myhost.cfg.j2
+        dest: /usr/local/nagios/etc/servers/myhost.cfg
+
+    - name: Change owner servers directory
+      shell: |
+        chown -R nagios: /usr/local/nagios/etc/servers/
+
+    - name: Add Apache to startup services
+      service:
+        name: httpd
+        enabled: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Add nagios to startup services
+      service:
+        name: nagios
+        enabled: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Restart httpd
+      service:
+        name: httpd
+        state: restarted
+      when: ansible_os_family == "RedHat"
+
+    - name: Restart nagios
+      service:
+        name: nagios
+        state: restarted
+      when: ansible_os_family == "RedHat"
