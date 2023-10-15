@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "PONG"
+    return ""
   
 @app.route('/service1', methods=['GET'])
 def microservice1():
