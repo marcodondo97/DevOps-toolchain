@@ -39,7 +39,7 @@ Contiene il file Ansible per l'installazione e configurazione del server Nagios.
 La configurazione prevede sia le sonde di defualt sullo stessa istanza che l'aggiunta di una semplice sonda (http_check) sull'endpoint del container.
 
 <h3> Test </h3>
-Contiene dei banali unit test sugli endpoints dei servizi. Verifica solo lo status di risposta è 200.
+Contiene dei banali unit test sugli endpoints dei servizi. Verifica solo se lo status di risposta è 200.
 
 <h3> workflows </h3>
 
