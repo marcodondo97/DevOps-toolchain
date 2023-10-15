@@ -43,7 +43,7 @@ Contiene dei banali unit test sugli endpoints dei servizi. Verifica solo lo stat
 
 <h3> workflows </h3>
 
-Contiene la CICD pieleine. Quando viene fatto un push sulla cartella App provvede a caricare in locale il container, fare i test e infine pusha l'immagine al container service di AWS.
+Contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a caricare in locale il container, fare i test e infine pusha l'immagine al container service di AWS.
 Il deploy è manuale direttamante su console AWS.
 
 
