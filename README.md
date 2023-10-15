@@ -39,9 +39,9 @@ All'interno di TerraformInf è presente il file Terraform per il provisioning de
 
 <h4> AnsibleConf </h4>
 
-La cartella AnsibleConf contiene il file Ansible per l'installazione e configurazione del server di monitoraggio Nagios.
-La configurazione prevede sia le sonde di defualt sulla stessa istanza (localhost) che l'aggiunta di un nuovo host (my-container-service-1) con una sonda sull'endpoint del container service (http_check).
-Inoltre è stato configurato il redirect Apache dalla root del sito al path /nagios. Così da poter accedere direttamante dall'IP pubblico.
+La cartella AnsibleConf contiene il file Ansible per l'installazione e configurazione del server di monitoraggio Nagios. <br>
+La configurazione prevede sia le sonde di defualt sulla stessa istanza (localhost) che l'aggiunta di un nuovo host (my-container-service-1) con una sonda sull'endpoint del container service (http_check). <br>
+Inoltre è stato configurato il redirect Apache dalla root del sito al path /nagios. Così da poter accedere direttamante dall'IP pubblico. <br>
   <img src="Img/Nagios.png" width="80%">
 
 <h3> Test </h3>
