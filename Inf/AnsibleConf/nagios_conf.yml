@@ -123,10 +123,10 @@
         path: /usr/local/nagios/etc/servers
         state: directory
 
-    - name: Copy myhost.cfg file to the server
+    - name: Copy my-container-service-1.cfg file to the server
       template:
-        src: Templates/myhost.cfg.j2
-        dest: /usr/local/nagios/etc/servers/myhost.cfg
+        src: Templates/my-container-service-1.cfg.j2
+        dest: /usr/local/nagios/etc/servers/my-container-service-1.cfg
 
     - name: Change owner servers directory
       shell: |
