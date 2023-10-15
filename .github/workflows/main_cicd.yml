@@ -41,7 +41,6 @@ jobs:
     - name: Delivery apigateway
       if: steps.changes.outputs.Apigateway == 'true'
       run: |
-       pwd
        docker build . --file ..App/Apigateway/Dockerfile -t apigateway
        docker run -d -p 5000:5000 --name apigateway apigateway
        sleep 10
@@ -56,10 +55,11 @@ jobs:
     - name: Delivery service1 
       if: steps.changes.outputs.Service1 == 'true'
       run: |
-       docker build . --file ..App/Service1/Dockerfile -t service1
+       pwd
+       docker build . --file ../../App/Service1/Dockerfile -t service1
        docker run -d -p 5001:5001 --name service1 service1
        sleep 10
-       test_service1=$(python ../Test/test_service1.py)
+       test_service1=$(python ../../Test/test_service1.py)
        echo $test_service1
        if [ "$test_service1" == "OK" ]; then
            aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label service1 --image service1
