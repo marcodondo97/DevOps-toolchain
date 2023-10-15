@@ -1,0 +1,85 @@
+on:
+  push:
+    paths:
+      - 'App/Apigateway/*'
+      - 'App/Service1/*'
+      - 'App/Service2/*'
+jobs:
+  Delivery_Containers:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        filters: |
+          Apigateway:
+            - 'App/Apigateway/**'
+          Service1:
+            - 'App/Service1/**'
+          Service2:
+            - 'App/Service2/**'
+
+    - name: Install AWS
+      run: |
+        aws --version
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+        which aws
+        aws --version
+        sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+        sudo chmod +x /usr/local/bin/lightsailctl
+        
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+               
+    - name: Delivery apigateway
+      if: steps.changes.outputs.Apigateway == 'true'
+      run: |
+       docker build . --file .App/Apigateway/Dockerfile -t apigateway
+       docker run -d -p 5000:5000 --name apigateway apigateway
+       sleep 10
+       test_apigateway=$(python ./Test/test_apigateway.py)
+       if [ "$test_apigateway" == "OK" ]; then
+        aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label apigateway --image apigateway
+       else
+         echo "API Gateway test failed, stopping the pipeline"
+         exit 1
+       fi       
+         
+    - name: Delivery service1 
+      if: steps.changes.outputs.Service1 == 'true'
+      run: |
+       docker build . --file .App/Service1/Dockerfile -t service1
+       docker run -d -p 5001:5001 --name service1 service1
+       sleep 10
+       test_service1=$(python ./Test/test_service1.py)
+       echo $test_service1
+       if [ "$test_service1" == "OK" ]; then
+           aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label service1 --image service1
+       else
+           echo "API Gateway test failed, stopping the pipeline"
+           exit 1
+       fi       
+    
+    - name: Delivery service2
+      if: steps.changes.outputs.Service2 == 'true'
+      run: |
+       docker build . --file ./App/Service2/Dockerfile -t service2
+       docker run -d -p 5002:5002 --name service2 service2
+       sleep 10
+       test_service2=$(python ./Test/test_service2.py)
+       if [ "$test_service2" == "OK" ]; then
+           aws lightsail push-container-image --service-name ${{ secrets.SERVICE_NAME }} --label service2 --image service2
+       else
+           echo "API Gateway test failed, stopping the pipeline"
+           exit 1
+       fi
+      
+    
+
