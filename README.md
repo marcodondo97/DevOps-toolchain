@@ -13,14 +13,16 @@ Sono presenti 4 cartelle:
 <h2> Descrizione delle cartelle </h2>
 
 <h3> App </h3>
-L'applicaizone python Flask è composta da 3 containers:
+La cartella APP contiene l'applicaizone python Flask che è composta da 3 containers:
 
 - apygateway: è il punto di accesso dei due altri servizi (API), mappato sulla porta 5000 permette di indirizzare le chiamate HTTP GET ai paths /service1 e /service2
 - service1: il servizio 1, mappato sulla porta 5001. Restituisce una stringa json.
 - service2: il servizio 2, mappato sulla porta 5002. Eestituisce una stringa json.
 
+<img src="Img/MicroserviceDiagram.png" width="40%">
+
 <h3> Inf </h3>
-Sono presenti due cartelle:
+In Inf sono presenti due cartelle:
 
 - TerraformInf
 - AnsibleConf
@@ -28,23 +30,31 @@ Sono presenti due cartelle:
 
 <h4> TerraformInf </h4>
 
-Qui è presente il file Terraform per il provisioning dell'infrastruttura AWS Lightsail secondo un'approccio IaC, la quale è composta da:
+All'interno di TerraformInf è presente il file Terraform per il provisioning dell'infrastruttura AWS Lightsail secondo un'approccio IaC, la quale è composta da:
 - 1 istanza Amazon Linux 2, la quale serve da server di monitoraggio Nagios sull'infrastruttura.
 - 1 indirizzo ip statico da collegare all'istanza.
-- 1 container service con due nodi, che ospiterà l'applicazione microservizi python FLask.
+- 1 container service con due nodi, che ospiterà l'applicazione microservizi python Flask.
+ <img src="Img/TerraformApply.png" width="50%">
+  <img src="Img/InfAWS.png" width="50%">
 
 <h4> AnsibleConf </h4>
 
-Contiene il file Ansible per l'installazione e configurazione del server Nagios.
-La configurazione prevede sia le sonde di defualt sullo stessa istanza che l'aggiunta di una semplice sonda (http_check) sull'endpoint del container.
+La cartella AnsibleConf contiene il file Ansible per l'installazione e configurazione del server Nagios.
+La configurazione Nagios prevede sia le sonde di defualt sulla stessa istanza che l'aggiunta di un nuovo host (my-container-service-1) con una sonda sull'endpoint del container service (http_check).
+
+  <img src="Img/Nagios.png" width="80%">
 
 <h3> Test </h3>
-Contiene dei banali unit test sugli endpoints dei servizi. Verifica solo se lo status di risposta è 200.
+In Test ci sono dei banali unit test sugli endpoints dei servizi. Verifica solo se lo status di risposta è 200.
+  <img src="Img/Service1.png" width="60%">
+    <img src="Img/Service2.png" width="60%">
 
 <h3> workflows </h3>
 
-Contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a caricare in locale il container, fare i test e infine pusha l'immagine al container service di AWS.
+La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a caricare in locale il container, fare i test e infine pusha l'immagine al container service di AWS.
 Il deploy è manuale direttamante su console AWS.
+
+  <img src="Img/CICDGitHubAction.png" width="80%">
 
 
 
