@@ -13,7 +13,7 @@ Sono presenti 4 cartelle:
 <h2> Descrizione delle cartelle </h2>
 
 <h3> App </h3>
-La cartella APP contiene l'applicaizone python Flask che è composta da 3 containers:
+La cartella App contiene l'applicaizone python Flask che è composta da 3 containers:
 
 - apygateway: è il punto di accesso dei due altri servizi (API), mappato sulla porta 5000 permette di indirizzare le chiamate HTTP GET ai paths /service1 e /service2
 - service1: il servizio 1, mappato sulla porta 5001. Restituisce una stringa json.
