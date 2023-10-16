@@ -17,7 +17,7 @@ La cartella APP contiene l'applicaizone python Flask che è composta da 3 contai
 
 - apygateway: è il punto di accesso dei due altri servizi (API), mappato sulla porta 5000 permette di indirizzare le chiamate HTTP GET ai paths /service1 e /service2
 - service1: il servizio 1, mappato sulla porta 5001. Restituisce una stringa json.
-- service2: il servizio 2, mappato sulla porta 5002. Eestituisce una stringa json.
+- service2: il servizio 2, mappato sulla porta 5002. Restituisce una stringa json.
 
 <img src="Img/MicroserviceDiagram.png" width="40%">
 
