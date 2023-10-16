@@ -3,12 +3,12 @@ define host {
     address                {{ HostAddress }}
     max_check_attempts     3
     check_period           24x7
-    check_command          check_http
+    check_command          check_http!-p 5000
 }
 
 define service {
     use                   generic-service
     host_name              {{ HostName }}
-    service_description    HTTP Check
-    check_command          check_http
+    service_description    HTTP
+    check_command          check_http!-p 5000
 }
