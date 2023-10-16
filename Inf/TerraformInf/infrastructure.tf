@@ -39,5 +39,5 @@ output "public_ip" {
 }
 
 output "container_service_domain" {
-  value = awslightsail_container_service.my_container_service.url
+  value = awslightsail_container_service.my_container_service.private_domain_name
 }
