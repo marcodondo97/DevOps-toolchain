@@ -40,7 +40,7 @@ All'interno di TerraformInf è presente il file Terraform per il provisioning de
 <h4> AnsibleConf </h4>
 
 La cartella AnsibleConf contiene il file Ansible per l'installazione e configurazione del server di monitoraggio Nagios. <br>
-La configurazione prevede sia le sonde di defualt sulla stessa istanza (localhost) che l'aggiunta di un nuovo host (my-container-service-1) con una sonda sull'endpoint del servizio apigateway per verificare il corretto accesso a tutti i microservizi (http_check). <br>
+La configurazione prevede sia le sonde di defualt sulla stessa istanza (localhost) che l'aggiunta del un nuovo host (il servizio container chiamato my-container-service-1) con un http check sull'endpoint del servizio apigateway per verificare il corretto accesso a tutti i microservizi (in sostanza verifica che l'apigateway sia raggiungibile). <br>
 Inoltre è stato configurato il redirect Apache dalla root del sito al path /nagios. Così da poter accedere direttamante dall'IP pubblico. <br>
   <img src="Img/Nagios.png" width="80%">
 ```
@@ -68,7 +68,7 @@ In Test ci sono dei banali unit test sugli endpoints dei servizi. Verifica solo 
 
 <h3> workflows </h3>
 
-La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a caricare in locale il container, fare i test e infine pusha l'immagine al container service di AWS.
+La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a fare la build e run del container in locale, fare i test e infine pusha l'immagine al container service di AWS.
 Il deploy è manuale direttamante su console AWS.
 
   <img src="Img/CICDGitHubAction.png" width="80%">
