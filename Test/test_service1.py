@@ -11,7 +11,7 @@ class TestAPIEndpoint(unittest.TestCase):
                 result = "OK"
             else:
                 result = "KO"
-                #pi
+                
         except Exception as e:
             result = "KO"   
         print(result)
