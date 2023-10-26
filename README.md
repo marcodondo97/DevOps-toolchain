@@ -31,7 +31,7 @@ In Inf sono presenti due cartelle:
 <h4> TerraformInf </h4>
 
 All'interno di TerraformInf è presente il file Terraform per il provisioning dell'infrastruttura AWS Lightsail secondo un'approccio IaC, la quale è composta da:
-- 1 istanza Amazon Linux 2, la quale serve da server di monitoraggio Nagios sull'infrastruttura.
+- 1 istanza Amazon Linux 2 che serve da server di monitoraggio Nagios sull'infrastruttura.
 - 1 indirizzo ip statico da collegare all'istanza.
 - 1 container service con due nodi, che ospiterà l'applicazione microservizi python Flask.
  <img src="Img/TerraformApply.png" width="50%">
