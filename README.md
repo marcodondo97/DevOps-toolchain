@@ -3,15 +3,28 @@
 <h2> Introduzione </h2>
 In questo repo è presente una dimostrazione minimale di una DevOps toolchain per una applicazione microservizi scritta in python.
 
+Gli strumenti impiegati nella catena DevOps di questa dimostrazione comprendono:
+
+- Plan: per la pianificazione è stato implementato Jira con le relative automations dei task sulle attività del repo (commit, push, pull...).
+- Code: questo repo di GitHub.
+- Build: i container vengono buildati con Docker.
+- Test: sono stati scritti dei test con la libreria Unittest di python.
+- Release: l'integrazione ed il rilascio continuo è stato implemntato con GitHub Actions.
+- Deploy: l'applicazione viene deployata su servizi AWS Lightsail dedicati alla gestione di applicazioni basate su container
+- Operate: il provisiong dell'infrastrutture è gestito con Terraform, mentre la configurazioni con Ansible.
+- Monitor: Per il monitoraggio è stato installato e configurato un server Nagios.
+
+
+ <img src="Img/DevOpsToolChainFlow.png" width="50%">
+
+<h2> Descrizione</h2>
 Sono presenti 4 cartelle:
 
 - App: contiene l'applicazione microservizi Docker scritta con Flask python.
 - Inf: contiene il file Terraform con l'infrastruttura AWS Lightsail e il file Ansible per configurazione del server di monitoraggio Nagios.
 - Test: contiene gli unit test dei 3 microservizi python.
 - workflows: contiene la CICD (delivery) pipeline.
-
-<h2> Descrizione delle cartelle </h2>
-
+- 
 <h3> App </h3>
 La cartella App contiene l'applicaizone python Flask che è composta da 3 containers:
 
