@@ -24,7 +24,7 @@ Sono presenti 4 cartelle:
 - Inf: contiene il file Terraform con l'infrastruttura AWS Lightsail e il file Ansible per configurazione del server di monitoraggio Nagios.
 - Test: contiene gli unit test dei 3 microservizi python.
 - workflows: contiene la CICD (delivery) pipeline.
-- 
+
 <h3> App </h3>
 La cartella App contiene l'applicaizone python Flask che è composta da 3 containers:
 
