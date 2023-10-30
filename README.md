@@ -2,8 +2,9 @@
 
 <h2> Introduzione </h2>
 In questo repo è presente una dimostrazione minimale di una DevOps toolchain per una applicazione microservizi scritta in python.
-
-Per ogni fase della catena DevOps sono stati impiegati strumenti specifici:
+<br>
+<br>
+Per ogni fase DevOps sono stati impiegati strumenti specifici:
 
 - Plan: per la pianificazione è stato implementato Jira con le relative automations dei task sulle attività del repo (commit, push, pull...).
 - Code: Per la parte di code è stato creato questo repo di GitHub.
