@@ -1,7 +1,7 @@
 # DevOps-demo
 
 <h2> Introduzione </h2>
-In questo repo è presente una dimostrazione minimale di una DevOps toolchain per una applicazione microservizi scritta in python.
+Questo progetto vuole essere una dimostrazione minimale di una DevOps toolchain per una applicazione basata su microservizi scritta in python.
 <br>
 <br>
 Per ogni fase DevOps sono stati impiegati strumenti specifici:
@@ -19,7 +19,7 @@ Per ogni fase DevOps sono stati impiegati strumenti specifici:
  <img src="Img/DevOpsToolChainFlow.png" width="50%">
 
 <h2> Descrizione</h2>
-Sono presenti 4 cartelle:
+In questo repo sono presenti 4 cartelle:
 
 - App: contiene l'applicazione microservizi Docker scritta con Flask python.
 - Inf: contiene il file Terraform con l'infrastruttura AWS Lightsail e il file Ansible per configurazione del server di monitoraggio Nagios.
