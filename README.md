@@ -7,11 +7,11 @@ In questo repo è presente una dimostrazione minimale di una DevOps toolchain pe
 Per ogni fase DevOps sono stati impiegati strumenti specifici:
 
 - Plan: per la pianificazione è stato implementato Jira con le relative automations dei task sulle attività del repo (commit, push, pull...).
-- Code: Per la parte di code è stato creato questo repo di GitHub.
+- Code: per la parte di code è stato creato questo repo di GitHub.
 - Build: i container vengono buildati con Docker.
 - Test: i test sono stati scritti con la libreria Unittest di python.
-- Release: l'integrazione ed il rilascio continuo è stato implemntato con GitHub Actions.
-- Deploy: l'applicazione viene deployata su AWS Lightsail sul serzivio dedicato alla gestione di applicazioni basate su container
+- Release: l'integrazione ed il rilascio continuo è stato implementato con GitHub Actions.
+- Deploy: l'applicazione viene deployata su Amazon Lightsail sul serzivio dedicato alla gestione di applicazioni basate su container
 - Operate: il provisiong dell'infrastrutture è gestito con Terraform, mentre la configurazioni con Ansible.
 - Monitor: per il monitoraggio è stato installato e configurato un server Nagios.
 
