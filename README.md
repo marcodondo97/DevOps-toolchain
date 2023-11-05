@@ -84,7 +84,7 @@ In Test ci sono dei banali unit test sugli endpoints dei servizi. Verifica solo 
 
 <h3> workflows </h3>
 
-La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a fare la build e run del container in locale, fare i test ed infine pusha l'immagine al container service di Amazon Lightsail.<br>
+La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a fare la build e run del container in locale, fare i test ed infine pusha l'immagine al container service di AWS.<br>
 Il deploy è manuale direttamante su console AWS.
 
   <img src="Img/CICDGitHubAction.png" width="80%">
