@@ -9,9 +9,9 @@ Per ogni fase DevOps sono stati impiegati strumenti specifici:
 - Plan: per la pianificazione è stato implementato Jira con le relative automations dei task sulle attività del repo (commit, push, pull...).
 - Code: per la parte di code è stato creato questo repo di GitHub.
 - Build: i container vengono buildati con Docker.
-- Test: i test sono stati scritti con la libreria Unittest di python.
+- Test: i test sono stati scritti con la libreria unittest di python.
 - Release: l'integrazione ed il rilascio continuo è stato implementato con GitHub Actions.
-- Deploy: l'applicazione viene deployata su Amazon Lightsail sul serzivio dedicato alla gestione di applicazioni basate su container
+- Deploy: l'applicazione viene deployata su Amazon Lightsail di AWS sul serzivio dedicato alla gestione di applicazioni basate su container.
 - Operate: il provisiong dell'infrastrutture è gestito con Terraform, mentre la configurazioni con Ansible.
 - Monitor: per il monitoraggio è stato installato e configurato un server Nagios.
 
@@ -44,18 +44,18 @@ In Inf sono presenti due cartelle:
 
 <h4> TerraformInf </h4>
 
-All'interno di TerraformInf è presente il file Terraform per il provisioning dell'infrastruttura AWS Lightsail secondo un'approccio IaC, la quale è composta da:
+All'interno di TerraformInf è presente il file Terraform per il provisioning dell'infrastruttura Amazon Lightsail secondo un'approccio IaC, la quale è composta da:
 - 1 istanza Amazon Linux 2 che serve da server di monitoraggio Nagios sull'infrastruttura.
 - 1 indirizzo ip statico da collegare all'istanza.
 - 1 container service con due nodi, che ospiterà l'applicazione microservizi python Flask.
- <img src="Img/TerraformApply.png" width="50%">
-  <img src="Img/InfAWS.png" width="50%">
+<img src="Img/TerraformApply.png" width="50%">
+<img src="Img/InfAWS.png" width="50%">
 
 <h4> AnsibleConf </h4>
 
 La cartella AnsibleConf contiene il file Ansible per l'installazione e configurazione del server di monitoraggio Nagios. <br>
 <br>
-La configurazione prevede sia i chek di defualt sulla stessa istanza (localhost), che l'aggiunta del nuovo host (il servizio container chiamato my-container-service-1) con un http check sull'endpoint del servizio apigateway per verificare il corretto accesso a tutti i microservizi, in altre parole verifica che l'apigateway sia raggiungibile. <br>
+La configurazione prevede sia i chek di defualt sulla stessa istanza (localhost), che l'aggiunta del nuovo host (Amazon Lightsail container chiamato my-container-service-1) con un http check sull'endpoint del servizio apigateway per verificare il corretto accesso a tutti i microservizi, in altre parole verifica che l'apigateway sia raggiungibile. <br>
 <br>
 Inoltre è stato configurato il redirect Apache dalla root del sito al path /nagios. Così da poter accedere all console Nagios direttamante dall'indirizzo IP pubblico dell'istanza senza aggiungere il path /nagios. <br>
   <img src="Img/Nagios.png" width="80%">
@@ -84,7 +84,7 @@ In Test ci sono dei banali unit test sugli endpoints dei servizi. Verifica solo 
 
 <h3> workflows </h3>
 
-La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a fare la build e run del container in locale, fare i test e infine pusha l'immagine al container service di AWS.
+La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a fare la build e run del container in locale, fare i test ed infine pusha l'immagine al container service di Amazon Lightsail.<br>
 Il deploy è manuale direttamante su console AWS.
 
   <img src="Img/CICDGitHubAction.png" width="80%">
