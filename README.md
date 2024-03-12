@@ -45,7 +45,7 @@ Inside TerraformInf is the Terraform file for provisioning the Amazon Lightsail 
 - 1 static IP address to be linked to the instance.
 - 1 service container with two nodes, hosting the Flask Python microservices application.
 <img src="Img/TerraformApply.png" width="50%">
-<img src="Img/InfAWS.png" width="50%">
+<img src="Img/Inf.png" width="50%">
 <h4> AnsibleConf </h4>
 The AnsibleConf folder contains the Ansible file for installing and configuring the Nagios monitoring server. <br>
 <br>
@@ -81,7 +81,7 @@ In Test, there are simple unit tests on the services' endpoints. It only verifie
 The workflows folder contains the CI/CD pipeline. When a push is made to the App folder, it builds and runs the container locally, performs tests, and finally pushes the image to the AWS container service. <br>
 Deployment is manual directly through the AWS console.
 
-  <img src="Img/CICDGitHubAction.png" width="80%">
+  <img src="Img/CICDGitHubActions.png" width="80%">
 
 
 
