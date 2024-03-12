@@ -1,64 +1,59 @@
 # DevOps-demo
 
-<h2> Introduzione </h2>
-Questo progetto vuole essere una dimostrazione minimale di una DevOps toolchain per una applicazione basata su microservizi scritta in python.
+<h2> Introduction </h2>
+This project aims to be a minimal demonstration of a DevOps toolchain for a microservices-based application written in Python.
 <br>
 <br>
-Per ogni fase DevOps sono stati impiegati strumenti specifici:
+Specific tools have been implemented for each DevOps phase:
 
-- Plan: per la pianificazione è stato implementato Jira con le relative automations dei task sulle attività del repo (commit, push, pull...).
-- Code: per la parte di code è stato creato questo repo di GitHub.
-- Build: i container vengono buildati con Docker.
-- Test: i test sono stati scritti con la libreria unittest di python.
-- Release: l'integrazione ed il rilascio continuo è stato implementato con GitHub Actions.
-- Deploy: l'applicazione viene deployata su Amazon Lightsail di AWS sul serzivio dedicato alla gestione di applicazioni basate su container.
-- Operate: il provisiong dell'infrastrutture è gestito con Terraform, mentre la configurazioni con Ansible.
-- Monitor: per il monitoraggio è stato installato e configurato un server Nagios.
+- Plan: Jira has been implemented for planning with task automations related to repository activities (commit, push, pull...).
+- Code: This GitHub repository has been created for the code part.
+- Build: Containers are built using Docker.
+- Test: Tests have been written using Python's unittest library.
+- Release: Continuous integration and deployment have been implemented using GitHub Actions.
+- Deploy: The application is deployed on Amazon Lightsail from AWS on the container-based application management service.
+- Operate: Infrastructure provisioning is managed using Terraform, while configuration is handled with Ansible.
+- Monitor: Nagios server has been installed and configured for monitoring.
 
 
  <img src="Img/DevOpsToolChainFlow.png" width="50%">
 
-<h2> Descrizione</h2>
-In questo repo sono presenti 4 cartelle:
+<h2> Description</h2>
+This repository contains 4 folders:
 
-- App: contiene l'applicazione microservizi Docker scritta con Flask python.
-- Inf: contiene il file Terraform con l'infrastruttura AWS Lightsail e il file Ansible per configurazione del server di monitoraggio Nagios.
-- Test: contiene gli unit test dei 3 microservizi python.
-- workflows: contiene la CICD (delivery) pipeline.
+- App: Contains the Docker microservices application written in Flask Python.
+- Inf: Contains the Terraform file with AWS Lightsail infrastructure and the Ansible file for Nagios monitoring server configuration.
+- Test: Contains unit tests for the 3 Python microservices.
+- workflows: Contains the CI/CD pipeline.
 
 <h3> App </h3>
-La cartella App contiene l'applicaizone python Flask che è composta da 3 containers:
+The App folder contains the Flask Python application consisting of 3 containers:
 
-- apygateway: è il punto di accesso dei due altri servizi (API), mappato sulla porta 5000 permette di indirizzare le chiamate HTTP GET ai paths /service1 e /service2
-- service1: il servizio 1, mappato sulla porta 5001. Restituisce una stringa json.
-- service2: il servizio 2, mappato sulla porta 5002. Restituisce una stringa json.
-
+- apygateway: Acts as the entry point for the other two services (APIs), mapped to port 5000, allowing HTTP GET requests to be directed to paths /service1 and /service2.
+- service1: Service 1, mapped to port 5001, returns a JSON string.
+- service2: Service 2, mapped to port 5002, returns a JSON string.
 <img src="Img/MicroserviceDiagram.png" width="40%">
-
 <h3> Inf </h3>
-In Inf sono presenti due cartelle:
+The Inf folder contains two subfolders:
 
 - TerraformInf
 - AnsibleConf
-
-
 <h4> TerraformInf </h4>
+Inside TerraformInf is the Terraform file for provisioning the Amazon Lightsail infrastructure following an IaC approach, consisting of:
 
-All'interno di TerraformInf è presente il file Terraform per il provisioning dell'infrastruttura Amazon Lightsail secondo un'approccio IaC, la quale è composta da:
-- 1 istanza Amazon Linux 2 che serve da server di monitoraggio Nagios sull'infrastruttura.
-- 1 indirizzo ip statico da collegare all'istanza.
-- 1 container service con due nodi, che ospiterà l'applicazione microservizi python Flask.
+- 1 Amazon Linux 2 instance serving as the Nagios monitoring server on the infrastructure.
+- 1 static IP address to be linked to the instance.
+- 1 service container with two nodes, hosting the Flask Python microservices application.
 <img src="Img/TerraformApply.png" width="50%">
 <img src="Img/InfAWS.png" width="50%">
-
 <h4> AnsibleConf </h4>
+The AnsibleConf folder contains the Ansible file for installing and configuring the Nagios monitoring server. <br>
+<br>
+The configuration includes both default checks on the same instance (localhost) and the addition of the new host (Amazon Lightsail container named my-container-service-1) with an HTTP check on the apigateway service endpoint to verify correct access to all microservices, in other words, it verifies that the apigateway is reachable. <br>
+<br>
+Additionally, Apache redirect from the site root to the /nagios path has been configured. This allows accessing the Nagios console directly from the instance's public IP address without adding the /nagios path. <br>
+<img src="Img/Nagios.png" width="80%">
 
-La cartella AnsibleConf contiene il file Ansible per l'installazione e configurazione del server di monitoraggio Nagios. <br>
-<br>
-La configurazione prevede sia i chek di defualt sulla stessa istanza (localhost), che l'aggiunta del nuovo host (Amazon Lightsail container chiamato my-container-service-1) con un http check sull'endpoint del servizio apigateway per verificare il corretto accesso a tutti i microservizi, in altre parole verifica che l'apigateway sia raggiungibile. <br>
-<br>
-Inoltre è stato configurato il redirect Apache dalla root del sito al path /nagios. Così da poter accedere all console Nagios direttamante dall'indirizzo IP pubblico dell'istanza senza aggiungere il path /nagios. <br>
-  <img src="Img/Nagios.png" width="80%">
 ```
 #Terraform commands
 
@@ -77,15 +72,14 @@ ansible --version
 #ansible [core 2.15.1]
 ansible-playbook -i inventory.ini nagios_conf.yml
 ```
+
 <h3> Test </h3>
-In Test ci sono dei banali unit test sugli endpoints dei servizi. Verifica solo se lo status di risposta è 200.
+In Test, there are simple unit tests on the services' endpoints. It only verifies if the response status is 200.
   <img src="Img/Service1.png" width="60%">
     <img src="Img/Service2.png" width="60%">
-
 <h3> workflows </h3>
-
-La cartella workflows contiene la CICD pipeline. Quando viene fatto un push sulla cartella App provvede a fare la build e run del container in locale, fare i test ed infine pusha l'immagine al container service di AWS.<br>
-Il deploy è manuale direttamante su console AWS.
+The workflows folder contains the CI/CD pipeline. When a push is made to the App folder, it builds and runs the container locally, performs tests, and finally pushes the image to the AWS container service. <br>
+Deployment is manual directly through the AWS console.
 
   <img src="Img/CICDGitHubAction.png" width="80%">
 
