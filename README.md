@@ -4,7 +4,7 @@
 This project aims to be a minimal demonstration of a DevOps toolchain for a microservices-based application written in Python.
 <br>
 <br>
-Specific tools have been implemented for each DevOps phase:
+Specific tools have been implemented for each DevOps stage:
 
 - Plan: Jira has been implemented for planning with task automations related to repository activities (commit, push, pull...).
 - Code: This GitHub repository has been created for the code part.
