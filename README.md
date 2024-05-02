@@ -1,7 +1,7 @@
 # DevOps-demo
 
 <h2> Introduction </h2>
-This project aims to be a minimal demonstration of a DevOps toolchain for a microservices-based application written in Python.
+This project is a simple example of a DevOps setup for an app with microservices, using Python.
 <br>
 <br>
 Specific tools have been implemented for each DevOps stage:
