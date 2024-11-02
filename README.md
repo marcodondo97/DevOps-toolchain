@@ -30,7 +30,7 @@ This repository contains 4 folders:
 <h3> App </h3>
 The App folder contains the Flask Python application consisting of 3 containers:
 
-- apygateway: Acts as the entry point for the other two services (APIs), mapped to port 5000, allowing HTTP GET requests to be directed to paths /service1 and /service2.
+- apigateway: Acts as the entry point for the other two services (APIs), mapped to port 5000, allowing HTTP GET requests to be directed to paths /service1 and /service2.
 - service1: Service 1, mapped to port 5001, returns a JSON string.
 - service2: Service 2, mapped to port 5002, returns a JSON string.
 <img src="Img/MicroserviceDiagram.png" width="40%">
