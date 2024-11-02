@@ -40,7 +40,7 @@ The Inf folder contains two subfolders:
 - TerraformInf
 - AnsibleConf
 <h4> TerraformInf </h4>
-The **TerraformInf** folder contains the Terraform file for provisioning Amazon Lightsail infrastructure with an Infrastructure as Code (IaC) approach. It includes:
+The TerraformInf folder contains the Terraform file for provisioning Amazon Lightsail infrastructure with an Infrastructure as Code (IaC) approach. It includes:
 
 - 1 Amazon Linux 2 instance serving as the Nagios monitoring server on the infrastructure.
 - 1 static IP address to be linked to the instance.
